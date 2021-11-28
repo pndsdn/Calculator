@@ -114,30 +114,22 @@ class Calculator(QWidget):
         if self.input.text() == '':
             return
 
+        result = 0
         self.num_2 = float(self.input.text())
         if self.op == "+":
             result = self.num_1 + self.num_2
-            if result % 1 == 0:
-                self.input.setText(str(int(result)))
-
-            else:
-                self.input.setText(str(result))
 
         if self.op == "-":
             result = self.num_1 - self.num_2
-            if result % 1 == 0:
-                self.input.setText(str(int(result)))
-
-            else:
-                self.input.setText(str(result))
 
         if self.op == "*":
             result = self.num_1 * self.num_2
-            if result % 1 == 0:
-                self.input.setText(str(int(result)))
 
-            else:
-                self.input.setText(str(result))
+        if result % 1 == 0:
+            self.input.setText(str(int(result)))
+
+        else:
+            self.input.setText(str(result))
 
         if self.op == "/":
             if self.num_2 == 0:
