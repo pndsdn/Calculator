@@ -83,6 +83,7 @@ class Calculator(QWidget):
         self.b_divide.clicked.connect(lambda: self._operation("/"))
         self.b_clr.clicked.connect(lambda: self._clear())
         self.b_result.clicked.connect(self._result)
+        self.b_bs.clicked.connect(self._backspase)
 
         self.b_1.clicked.connect(lambda: self._button("1"))
         self.b_2.clicked.connect(lambda: self._button("2"))
@@ -101,6 +102,7 @@ class Calculator(QWidget):
         if line == '0':
             if param != '.':
                 line = ''
+
         self.input.setText(line + param)
 
     def _operation(self, op):
@@ -109,6 +111,9 @@ class Calculator(QWidget):
         self.input.setText("")
 
     def _result(self):
+        if self.input.text() == '':
+            return
+
         self.num_2 = float(self.input.text())
         if self.op == "+":
             result = self.num_1 + self.num_2
@@ -148,6 +153,9 @@ class Calculator(QWidget):
 
     def _clear(self):
         self.input.setText("")
+
+    def _backspase(self):
+        self.input.setText(self.input.text()[:-1])
 
 
 app = QApplication(sys.argv)
