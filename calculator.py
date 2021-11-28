@@ -81,6 +81,7 @@ class Calculator(QWidget):
         self.b_minus.clicked.connect(lambda: self._operation("-"))
         self.b_multiply.clicked.connect(lambda: self._operation("*"))
         self.b_divide.clicked.connect(lambda: self._operation("/"))
+        self.b_clr.clicked.connect(lambda: self._clear())
         self.b_result.clicked.connect(self._result)
 
         self.b_1.clicked.connect(lambda: self._button("1"))
@@ -97,26 +98,56 @@ class Calculator(QWidget):
 
     def _button(self, param):
         line = self.input.text()
+        if line == '0':
+            if param != '.':
+                line = ''
         self.input.setText(line + param)
 
     def _operation(self, op):
-        self.num_1 = int(self.input.text())
+        self.num_1 = float(self.input.text())
         self.op = op
         self.input.setText("")
 
     def _result(self):
-        self.num_2 = int(self.input.text())
+        self.num_2 = float(self.input.text())
         if self.op == "+":
-            self.input.setText(str(self.num_1 + self.num_2))
+            result = self.num_1 + self.num_2
+            if result % 1 == 0:
+                self.input.setText(str(int(result)))
+
+            else:
+                self.input.setText(str(result))
 
         if self.op == "-":
-            self.input.setText(str(self.num_1 - self.num_2))
+            result = self.num_1 - self.num_2
+            if result % 1 == 0:
+                self.input.setText(str(int(result)))
+
+            else:
+                self.input.setText(str(result))
 
         if self.op == "*":
-            self.input.setText(str(self.num_1 * self.num_2))
+            result = self.num_1 * self.num_2
+            if result % 1 == 0:
+                self.input.setText(str(int(result)))
+
+            else:
+                self.input.setText(str(result))
 
         if self.op == "/":
-            self.input.setText(str(self.num_1 / self.num_2))
+            if self.num_2 == 0:
+                self.input.setText('Error: Division by zero')
+
+            else:
+                result = self.num_1 / self.num_2
+                if result % 1 == 0:
+                    self.input.setText(str(int(result)))
+
+                else:
+                    self.input.setText(str(result))
+
+    def _clear(self):
+        self.input.setText("")
 
 
 app = QApplication(sys.argv)
